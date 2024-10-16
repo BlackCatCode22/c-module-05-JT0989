@@ -5,20 +5,22 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-std::vector<std::string> split(const std::string &input, char delimiter) {
-    std::vector<std::string> result;
-    std::stringstream ss(input);
-    std::string item;
-    while (std::getline(ss, item, delimiter)) {
+using namespace std;
+
+vector<string> split(const string &input, char delimiter) {
+    vector<string> result;
+    stringstream ss(input);
+    string item;
+    while (getline(ss, item, delimiter)) {
         result.push_back(item);
     }
     return result;
 }
-std::vector<std::vector<std::string>> splitIntoWordGroups(const std::string &input)
+vector<vector<string>> splitIntoWordGroups(const string &input)
 {
     // Split the input by commas to get groups
-    std::vector<std::string> groups = split(input, ',');
-    std::vector<std::vector<std::string>> wordGroups;
+    vector<string> groups = split(input, ',');
+    vector<vector<string>> wordGroups;
     // For each group, split it into words and store it in the vector of vectors
     for (const auto &group : groups) {
         wordGroups.push_back(split(group, ' '));
@@ -26,21 +28,37 @@ std::vector<std::vector<std::string>> splitIntoWordGroups(const std::string &inp
     return wordGroups;
 }
 int main() {
-    std::string sampleInput = "4 year old female hyena, born in spring, tan color,70 pounds, from Friguia Park, Tunisia";
-    std::vector<std::vector<std::string>> result =
+    string sampleInput = "4 year old female hyena, born in spring, tan color,70 pounds, from Friguia Park, Tunisia";
+    string mySpecies = "";
+    vector<vector<string>> result =
     splitIntoWordGroups(sampleInput);
     // Output the groups and their words
+    int j = 0;
     for (size_t i = 0; i < result.size(); ++i) {
-        std::cout << "Group " << (i + 1) << ": ";
+        cout << "Group " << (i + 1) << ": ";
         for (const auto &word : result[i]) {
             if (i==0) {
                 // We are in the first group
-                std::cout << "\n in this first group and word is: " << word;
+                if(j==4) {
+                    mySpecies = word;
+
+
+                }
+
+                cout << "\n in this first group and word " << j << "is: " << word;
+                j++;
             }
-            std::cout << word << " ";
+            else {
+                cout << word << " ";
+            }
         }
-        std::cout << std::endl;
+        cout << endl;
     }
+
+
+    // Output species.
+    cout << "\n mySpecies is...." << mySpecies << endl;
+
     return 0;
 }
 
